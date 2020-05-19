@@ -7,7 +7,7 @@
 [![Quality Score](https://badgen.net/codeclimate/maintainability/kodekeep/reqwest)](https://codeclimate.com/github/kodekeep/reqwest)
 [![Total Downloads](https://badgen.net/npm/dt/kodekeep/reqwest)](https://npmjs.com/package/@kodekeep/reqwest)
 
-This package was created by, and is maintained by [Brian Faust](https://github.com/faustbrian), and provides ...
+This package was created by, and is maintained by [Brian Faust](https://github.com/faustbrian), and provides a developer experience focused API for DX Focused API for [ky](https://github.com/sindresorhus/ky).
 
 ## Installation
 
