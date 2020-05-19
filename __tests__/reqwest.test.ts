@@ -8,7 +8,8 @@ test("#withBasicAuth", async () => {
 		.withBasicAuth("username", "password")
 		.get<{ authenticated: boolean }>("/basic-auth/username/password");
 
-	expect(response.body.authenticated).toBeTrue();
+	expect(response.body?.authenticated).toBeTrue();
+	expect(response.status).toBe(200);
 });
 
 test.skip("#withDigestAuth", async () => {
@@ -16,7 +17,8 @@ test.skip("#withDigestAuth", async () => {
 		.withDigestAuth("username", "password")
 		.get<{ authenticated: boolean }>("/digest-auth/auth/username/password");
 
-	expect(response.body.authenticated).toBeTrue();
+	expect(response.body?.authenticated).toBeTrue();
+	expect(response.status).toBe(200);
 });
 
 test("#withToken", async () => {
@@ -24,31 +26,36 @@ test("#withToken", async () => {
 		.withToken("token")
 		.get<{ authenticated: boolean }>("/bearer");
 
-	expect(response.body.authenticated).toBeTrue();
+	expect(response.body?.authenticated).toBeTrue();
+	expect(response.status).toBe(200);
 });
 
 test("#get", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").get<{ args: object }>("/get", { key: "value" });
 
-	expect(response.body.args).toEqual({ key: "value" });
+	expect(response.body?.args).toEqual({ key: "value" });
+	expect(response.status).toBe(200);
 });
 
 test("#head", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").head("/get", { key: "value" });
 
 	expect(response.body).toBeEmpty();
+	expect(response.status).toBe(200);
 });
 
 test("#post", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").post<{ json: object }>("/post", { key: "value" });
 
-	expect(response.body.json).toEqual({ key: "value" });
+	expect(response.body?.json).toEqual({ key: "value" });
+	expect(response.status).toBe(200);
 });
 
 test("#patch", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").patch<{ json: object }>("/patch", { key: "value" });
 
-	expect(response.body.json).toEqual({ key: "value" });
+	expect(response.body?.json).toEqual({ key: "value" });
+	expect(response.status).toBe(200);
 });
 
 test("#put", async () => {
@@ -56,11 +63,20 @@ test("#put", async () => {
 		key: "value",
 	});
 
-	expect(response.body.json).toEqual({ key: "value" });
+	expect(response.body?.json).toEqual({ key: "value" });
+	expect(response.status).toBe(200);
 });
 
 test("#delete", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").delete<{ json: object }>("/delete", { key: "value" });
 
-	expect(response.body.json).toEqual({ key: "value" });
+	expect(response.body?.json).toEqual({ key: "value" });
+	expect(response.status).toBe(200);
+});
+
+test("#get with 404", async () => {
+	const response = await Reqwest.new("https://httpbin.org/").get<{ json: object }>("/status/404");
+
+	expect(response.body).toBeUndefined();
+	expect(response.status).toBe(404);
 });

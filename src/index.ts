@@ -5,7 +5,7 @@ import { ensureTrailingSlash } from "./helpers";
 type RequestOptions = Record<string, any>;
 
 interface Response<T> {
-	body: T;
+	body: T | undefined;
 	status: number;
 	headers: string;
 }
@@ -116,9 +116,8 @@ export class Reqwest {
 	/**
 	 * Specify the digest authentication username and password for the request.
 	 */
-	// @ts-ignore
 	public withDigestAuth(username: string, password: string): Reqwest {
-		throw new Error('The [withDigestAuth] method is not yet supported.');
+		throw new Error(`The [withDigestAuth("${username}", "${password}")] method is not yet supported.`);
 	}
 
 	/**
@@ -252,12 +251,22 @@ export class Reqwest {
 			}
 		}
 
-		const response = await ky[method.toLowerCase()](url.replace(/^\/+/g, ""), options);
+		let response;
+		try {
+			response = await ky[method.toLowerCase()](url.replace(/^\/+/g, ""), options);
+		} catch (error) {
+			response = error.response;
+		}
 
-		// todo: handle errors
+		let body: T | undefined;
+		try {
+			body = await response[method === "HEAD" ? "text" : "json"]();
+		} catch (error) {
+			body = undefined;
+		}
 
 		return {
-			body: await response[method === "HEAD" ? "text" : "json"](),
+			body,
 			status: response.status,
 			headers: response.headers,
 		};
