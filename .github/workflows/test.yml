@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest]
+        os: [macOS-latest]
         node: [12.x, 14.x]
 
     name: N${{ matrix.node }} - ${{ matrix.os }}
@@ -32,6 +32,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+
+      - name: Install TOR
+        run: brew install tor && tor &
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile

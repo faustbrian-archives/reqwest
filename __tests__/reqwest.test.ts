@@ -39,7 +39,7 @@ test("#withCookies", async () => {
 	expect(responseWithoutCookies.json()).toEqual({ cookies: {} });
 });
 
-test.skip("#withSocksProxy", async () => {
+test("#withSocksProxy", async () => {
 	const oldOrigin: string = (await Reqwest.new("https://httpbin.org/").get("/ip")).json().origin as string;
 
 	const newOrigin: string = (
