@@ -5,7 +5,7 @@
 [![Build Status](https://img.shields.io/github/workflow/status/kodekeep/reqwest/run-tests?label=tests)](https://github.com/kodekeep/reqwest/actions?query=workflow%3Arun-tests+branch%3Amaster)
 [![Coverage Status](https://badgen.net/codeclimate/coverage/kodekeep/reqwest)](https://codeclimate.com/github/kodekeep/reqwest)
 [![Quality Score](https://badgen.net/codeclimate/maintainability/kodekeep/reqwest)](https://codeclimate.com/github/kodekeep/reqwest)
-[![Total Downloads](https://badgen.net/npm/dt/kodekeep/reqwest)](https://npmjs.com/package/@kodekeep/reqwest)
+[![Total Downloads](https://badgen.net/npm/dt/@kodekeep/reqwest)](https://npmjs.com/package/@kodekeep/reqwest)
 
 This package was created by, and is maintained by [Brian Faust](https://github.com/faustbrian), and provides a developer experience focused API for DX Focused API for [ky](https://github.com/sindresorhus/ky).
 
