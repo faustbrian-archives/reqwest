@@ -1,14 +1,9 @@
 import ky from "ky-universal";
 
 import { ensureTrailingSlash } from "./helpers";
+import { Response } from "./response";
 
 type RequestOptions = Record<string, any>;
-
-interface Response<T> {
-	body: T | undefined;
-	status: number;
-	headers: string;
-}
 
 export class Reqwest {
 	/**
@@ -178,49 +173,49 @@ export class Reqwest {
 	/**
 	 * Issue a GET request to the given URL.
 	 */
-	public async get<T>(url: string, query?: object): Promise<Response<T>> {
-		return this.send<T>("GET", url, { query });
+	public async get(url: string, query?: object): Promise<Response> {
+		return this.send("GET", url, { query });
 	}
 
 	/**
 	 * Issue a HEAD request to the given URL.
 	 */
-	public async head<T>(url: string, query?: object): Promise<Response<T>> {
-		return this.send<T>("HEAD", url, { query });
+	public async head(url: string, query?: object): Promise<Response> {
+		return this.send("HEAD", url, { query });
 	}
 
 	/**
 	 * Issue a POST request to the given URL.
 	 */
-	public async post<T>(url: string, data?: object): Promise<Response<T>> {
-		return this.send<T>("POST", url, { data });
+	public async post(url: string, data?: object): Promise<Response> {
+		return this.send("POST", url, { data });
 	}
 
 	/**
 	 * Issue a PATCH request to the given URL.
 	 */
-	public async patch<T>(url, data?: object): Promise<Response<T>> {
-		return this.send<T>("PATCH", url, { data });
+	public async patch(url, data?: object): Promise<Response> {
+		return this.send("PATCH", url, { data });
 	}
 
 	/**
 	 * Issue a PUT request to the given URL.
 	 */
-	public async put<T>(url, data?: object): Promise<Response<T>> {
-		return this.send<T>("PUT", url, { data });
+	public async put(url, data?: object): Promise<Response> {
+		return this.send("PUT", url, { data });
 	}
 
 	/**
 	 * Issue a DELETE request to the given URL.
 	 */
-	public async delete<T>(url: string, data?: object): Promise<Response<T>> {
-		return this.send<T>("DELETE", url, { data });
+	public async delete(url: string, data?: object): Promise<Response> {
+		return this.send("DELETE", url, { data });
 	}
 
 	/**
 	 * Send the request to the given URL.
 	 */
-	private async send<T>(method: string, url: string, data?: { query?: object; data?: any }): Promise<Response<T>> {
+	private async send(method: string, url: string, data?: { query?: object; data?: any }): Promise<Response> {
 		const options: RequestOptions = {
 			...this.#options,
 		};
@@ -251,24 +246,10 @@ export class Reqwest {
 			}
 		}
 
-		let response;
 		try {
-			response = await ky[method.toLowerCase()](url.replace(/^\/+/g, ""), options);
+			return Response.make(await ky[method.toLowerCase()](url.replace(/^\/+/g, ""), options));
 		} catch (error) {
-			response = error.response;
+			return Response.make(error.response, error);
 		}
-
-		let body: T | undefined;
-		try {
-			body = await response[method === "HEAD" ? "text" : "json"]();
-		} catch (error) {
-			body = undefined;
-		}
-
-		return {
-			body,
-			status: response.status,
-			headers: response.headers,
-		};
 	}
 }
