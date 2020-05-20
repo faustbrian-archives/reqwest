@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## 0.2.0 - 2020-05-20
+
+### Changed
+
+-   Return `Response` instance
+-   Throw `RequestException` if `response.throw()` is called and an error occured
+
 ## 0.1.1 - 2020-05-19
 
 ### Fixed
