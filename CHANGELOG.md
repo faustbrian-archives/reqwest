@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## 0.3.0 - 2020-05-20
+
+### Changed
+
+-   Replace `ky` with `got`
+-   Support for cookies
+-   Support for SOCKS proxies
+
 ## 0.2.0 - 2020-05-20
 
 ### Changed
