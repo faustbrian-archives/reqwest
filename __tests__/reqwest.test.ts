@@ -27,6 +27,28 @@ test("#withToken", async () => {
 	expect(response.status()).toBe(200);
 });
 
+test("#withCookies", async () => {
+	const responseWithCookies = await Reqwest.new("https://httpbin.org/")
+		.withCookies({ foo: "bar" }, "https://httpbin.org/cookies")
+		.get("/cookies");
+
+	expect(responseWithCookies.json()).toEqual({ cookies: { foo: "bar" } });
+
+	const responseWithoutCookies = await Reqwest.new("https://httpbin.org/").get("/cookies");
+
+	expect(responseWithoutCookies.json()).toEqual({ cookies: {} });
+});
+
+test.skip("#withSocksProxy", async () => {
+	const oldOrigin: string = (await Reqwest.new("https://httpbin.org/").get("/ip")).json().origin as string;
+
+	const newOrigin: string = (
+		await Reqwest.new("https://httpbin.org/").withSocksProxy("socks5h://127.0.0.1:9050").get("/ip")
+	).json().origin as string;
+
+	expect(oldOrigin).not.toBe(newOrigin);
+});
+
 test("#get", async () => {
 	const response = await Reqwest.new("https://httpbin.org/").get("/get", { key: "value" });
 

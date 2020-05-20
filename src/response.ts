@@ -11,13 +11,7 @@ export class Response {
 
 	public constructor(response, error?: Error | undefined) {
 		this.#response = response;
-
-		try {
-			this.#body = response.body;
-		} catch {
-			this.#body = "";
-		}
-
+		this.#body = response.body || "";
 		this.#error = error;
 	}
 

@@ -1,8 +1,10 @@
 import got from "got";
+import { SocksProxyAgent } from "socks-proxy-agent";
+import { CookieJar } from "tough-cookie";
+import { URLSearchParams } from "url";
 
 import { ensureTrailingSlash } from "./helpers";
 import { Response } from "./response";
-import { URLSearchParams } from "url";
 
 type RequestOptions = Record<string, any>;
 
@@ -124,6 +126,21 @@ export class Reqwest {
 	}
 
 	/**
+	 * Specify the cookies that should be included with the request.
+	 */
+	public withCookies(cookies: object, domain: string): Reqwest {
+		const cookieJar: CookieJar = new CookieJar();
+
+		for (const [key, value] of Object.entries(cookies)) {
+			cookieJar.setCookie(`${key}=${value}`, domain);
+		}
+
+		this.#options.cookieJar = cookieJar;
+
+		return this;
+	}
+
+	/**
 	 * Indicate that redirects should not be followed.
 	 */
 	public withoutRedirecting(): Reqwest {
@@ -137,6 +154,18 @@ export class Reqwest {
 	 */
 	public withoutVerifying(): Reqwest {
 		this.#options.verify = false;
+
+		return this;
+	}
+
+	/**
+	 * Specify the host that should be used as SOCKS proxy.
+	 */
+	public withSocksProxy(host: string): Reqwest {
+		this.#options.agent = {
+			http: new SocksProxyAgent(host),
+			https: new SocksProxyAgent(host),
+		};
 
 		return this;
 	}
@@ -239,7 +268,6 @@ export class Reqwest {
 			}
 
 			if (this.#bodyFormat === "multipart") {
-				// @ts-ignore
 				options.body = new FormData();
 
 				for (const [key, value] of Object.entries(data.data)) {
