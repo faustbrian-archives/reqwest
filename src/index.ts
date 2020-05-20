@@ -1,7 +1,8 @@
-import ky from "ky-universal";
+import got from "got";
 
 import { ensureTrailingSlash } from "./helpers";
 import { Response } from "./response";
+import { URLSearchParams } from "url";
 
 type RequestOptions = Record<string, any>;
 
@@ -238,6 +239,7 @@ export class Reqwest {
 			}
 
 			if (this.#bodyFormat === "multipart") {
+				// @ts-ignore
 				options.body = new FormData();
 
 				for (const [key, value] of Object.entries(data.data)) {
@@ -247,9 +249,9 @@ export class Reqwest {
 		}
 
 		try {
-			return Response.make(await ky[method.toLowerCase()](url.replace(/^\/+/g, ""), options));
+			return new Response(await got[method.toLowerCase()](url.replace(/^\/+/g, ""), options));
 		} catch (error) {
-			return Response.make(error.response, error);
+			return new Response(error.response, error);
 		}
 	}
 }

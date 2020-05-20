@@ -22,9 +22,8 @@
 		"test:watch": "jest --watchAll"
 	},
 	"dependencies": {
-		"is-url-superb": "^3.0.0",
-		"ky": "^0.20.0",
-		"ky-universal": "^0.6.0"
+		"got": "^11.1.4",
+		"is-url-superb": "^3.0.0"
 	},
 	"devDependencies": {
 		"@sindresorhus/tsconfig": "^0.7.0",

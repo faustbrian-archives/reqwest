@@ -9,21 +9,16 @@ export class Response {
 
 	readonly #body: string;
 
-	private constructor({ body, error, response }) {
+	public constructor(response, error?: Error | undefined) {
 		this.#response = response;
-		this.#body = body;
-		this.#error = error;
-	}
 
-	public static async make(response, error?: Error | undefined): Promise<Response> {
-		let body;
 		try {
-			body = await response.text();
-		} catch (error) {
-			body = undefined;
+			this.#body = response.body;
+		} catch {
+			this.#body = "";
 		}
 
-		return new Response({ response, body, error });
+		this.#error = error;
 	}
 
 	public body(): string {
@@ -43,7 +38,7 @@ export class Response {
 	}
 
 	public status(): number {
-		return this.#response.status;
+		return this.#response.statusCode;
 	}
 
 	public successful(): boolean {
