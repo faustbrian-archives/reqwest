@@ -24,7 +24,6 @@
 	"dependencies": {
 		"got": "^11.1.4",
 		"is-url-superb": "^3.0.0",
-		"socks-proxy-agent": "^5.0.0",
 		"tough-cookie": "^4.0.0"
 	},
 	"devDependencies": {

@@ -1,5 +1,6 @@
 import got from "got";
-import { SocksProxyAgent } from "socks-proxy-agent";
+import http from "http";
+import https from "https";
 import { CookieJar } from "tough-cookie";
 import { URLSearchParams } from "url";
 
@@ -161,11 +162,8 @@ export class Reqwest {
 	/**
 	 * Specify the host that should be used as SOCKS proxy.
 	 */
-	public withSocksProxy(host: string): Reqwest {
-		this.#options.agent = {
-			http: new SocksProxyAgent(host),
-			https: new SocksProxyAgent(host),
-		};
+	public withAgent(agent: { http: http.Agent; https: https.Agent }): Reqwest {
+		this.#options.agent = agent;
 
 		return this;
 	}

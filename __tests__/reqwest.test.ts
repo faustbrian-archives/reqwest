@@ -1,4 +1,6 @@
 import "jest-extended";
+import http from "http";
+import https from "https";
 
 import { Reqwest } from "../src";
 
@@ -39,15 +41,16 @@ test("#withCookies", async () => {
 	expect(responseWithoutCookies.json()).toEqual({ cookies: {} });
 });
 
-// TODO: run this locally
-test.skip("#withSocksProxy", async () => {
-	const oldOrigin: string = (await Reqwest.new("https://httpbin.org/").get("/ip")).json().origin as string;
+test("#withAgent", async () => {
+	const response = await Reqwest.new("https://httpbin.org/")
+		.withAgent({
+			http: new http.Agent(),
+			https: new https.Agent(),
+		})
+		.get("/get", { key: "value" });
 
-	const newOrigin: string = (
-		await Reqwest.new("https://httpbin.org/").withSocksProxy("socks5h://127.0.0.1:9050").get("/ip")
-	).json().origin as string;
-
-	expect(oldOrigin).not.toBe(newOrigin);
+	expect(response.json().args).toEqual({ key: "value" });
+	expect(response.status()).toBe(200);
 });
 
 test("#get", async () => {

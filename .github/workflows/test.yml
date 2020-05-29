@@ -33,9 +33,6 @@ jobs:
               with:
                   node-version: ${{ matrix.node }}
 
-            - name: Install TOR
-              run: brew install tor && tor &
-
             - name: Install dependencies
               run: yarn install --frozen-lockfile
 
