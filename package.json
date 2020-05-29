@@ -1,6 +1,6 @@
 {
 	"name": "@kodekeep/reqwest",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "DX Focused API for sindresorhus/got",
 	"repository": "https://github.com/kodekeep/reqwest",
 	"license": "MPL-2.0",
