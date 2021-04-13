@@ -54,7 +54,9 @@ export class Reqwest {
 	 * Indicate the request contains form parameters.
 	 */
 	public asForm(): Reqwest {
-		return this.bodyFormat("form_params").contentType("application/x-www-form-urlencoded");
+		return this.bodyFormat("form_params").contentType(
+			"application/x-www-form-urlencoded"
+		);
 	}
 
 	/**
@@ -108,7 +110,9 @@ export class Reqwest {
 	 */
 	public withBasicAuth(username: string, password: string): Reqwest {
 		return this.withHeaders({
-			Authorization: `Basic ${Buffer.from(username + ":" + password).toString("base64")}`,
+			Authorization: `Basic ${Buffer.from(username + ":" + password).toString(
+				"base64"
+			)}`,
 		});
 	}
 
@@ -116,7 +120,9 @@ export class Reqwest {
 	 * Specify the digest authentication username and password for the request.
 	 */
 	public withDigestAuth(username: string, password: string): Reqwest {
-		throw new Error(`The [withDigestAuth("${username}", "${password}")] method is not yet supported.`);
+		throw new Error(
+			`The [withDigestAuth("${username}", "${password}")] method is not yet supported.`
+		);
 	}
 
 	/**
@@ -243,7 +249,11 @@ export class Reqwest {
 	/**
 	 * Send the request to the given URL.
 	 */
-	private async send(method: string, url: string, data?: { query?: object; data?: any }): Promise<Response> {
+	private async send(
+		method: string,
+		url: string,
+		data?: { query?: object; data?: any }
+	): Promise<Response> {
 		const options: RequestOptions = {
 			...this.#options,
 		};
@@ -275,7 +285,9 @@ export class Reqwest {
 		}
 
 		try {
-			return new Response(await got[method.toLowerCase()](url.replace(/^\/+/g, ""), options));
+			return new Response(
+				await got[method.toLowerCase()](url.replace(/^\/+/g, ""), options)
+			);
 		} catch (error) {
 			return new Response(error.response, error);
 		}

@@ -2,9 +2,13 @@ import { Response } from "./response";
 
 export class RequestException extends Error {
 	public constructor(response: Response, error?: Error) {
-		const message = error
-			? `HTTP request returned status code ${response.status()}: ${error.message}`
-			: `HTTP request returned status code ${response.status()}.`;
+		let message = "HTTP request returned status code";
+
+		if (error) {
+			message = ` ${response.status()}: ${error.message}`;
+		} else {
+			message += ` ${response.status()}.`;
+		}
 
 		super(message);
 

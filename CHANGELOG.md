@@ -11,31 +11,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
--   Allow usage of any HTTP/HTTPS Agent
+- Allow usage of any HTTP/HTTPS Agent
 
 ## 0.3.0 - 2020-05-20
 
 ### Changed
 
--   Replace `ky` with `got`
--   Support for cookies
--   Support for SOCKS proxies
+- Replace `ky` with `got`
+- Support for cookies
+- Support for SOCKS proxies
 
 ## 0.2.0 - 2020-05-20
 
 ### Changed
 
--   Return `Response` instance
--   Throw `RequestException` if `response.throw()` is called and an error occured
+- Return `Response` instance
+- Throw `RequestException` if `response.throw()` is called and an error occured
 
 ## 0.1.1 - 2020-05-19
 
 ### Fixed
 
--   Handle request errors
+- Handle request errors
 
 ## 0.1.0 - 2020-05-19
 
--   initial release
+- initial release
 
 [unreleased]: https://github.com/konceiver/reqwest/compare/master...develop
