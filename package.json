@@ -19,13 +19,13 @@
 		"dist"
 	],
 	"dependencies": {
-		"got": "^11.8.1",
-		"is-url-superb": "^5.0.0",
+		"got": "^11.8.2",
+		"is-url-superb": "^6.0.0",
 		"tough-cookie": "^4.0.0"
 	},
 	"devDependencies": {
-		"@konceiver/tease": "^2.0.0",
-		"nock": "^13.0.5"
+		"@konceiver/tease": "^2.0.1",
+		"nock": "^13.0.11"
 	},
 	"types": "dist/index"
 }
